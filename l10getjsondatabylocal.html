@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTTP request by AJAX</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+
+        //AJAX (Asynchronous javascript and XML)
+
+        let xmlhttp = new XMLHttpRequest();
+
+        xmlhttp.open("GET", 'l10sampledata.json', false);
+
+        xmlhttp.send();
+        console.log(xmlhttp);
+
+        let result;
+
+        if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
+
+            result = xmlhttp.responseText;
+            // console.log(result);
+
+        }
+
+        // console.log(result);
+        result = JSON.parse(result);
+        console.log(result);
+
+
+        console.log(result.weather);
+        console.log(result.weather[0].main);
+        console.log(result.weather[0]["main"]);
+
+        console.log(result.wind.speed);
+        console.log(result.wind["speed"]);
+        console.log(result["wind"]["speed"]);
+
+
+
+
+    </script>
+
+</body>
+
+</html>
