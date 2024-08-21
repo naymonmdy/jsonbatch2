@@ -1,25 +1,24 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HTTP request by AJAX</title>
+    <title>HTTP request By AJAX - Open Weather Map</title>
 </head>
 
 <body>
     <script type="text/javascript">
 
-        //AJAX (Asynchronous javascript and XML)
+        const key = "096a89c7ed91f4e847462d9235221369";
+        const latitude = "21.9960614";
+        const longitude = "96.0882213";
 
-        let xmlhttp = new XMLHttpRequest();
+        let uri = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=096a89c7ed91f4e847462d9235221369`;
 
-        xmlhttp.open("GET", 'l10sampledata.json', false);
 
-        xmlhttp.send();
-        console.log(xmlhttp);
-
+        const xmlhttp = new XMLHttpRequest();
+        xmlhttp.open("GET", uri, false);
         let result;
 
         if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
@@ -42,12 +41,10 @@
         console.log(result.wind["speed"]);
         console.log(result["wind"]["speed"]);
 
-
-
-
+        console.log(result.name);
+        console.log(result["name"]);
     </script>
 
 </body>
 
 </html>
-
