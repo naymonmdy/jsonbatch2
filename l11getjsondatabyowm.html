@@ -15,20 +15,23 @@
         const longitude = "96.0882213";
 
         let uri = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=096a89c7ed91f4e847462d9235221369`;
+        // let uri = `https://api.openweathermap.org/data/2.5/weather?lat=21.9960614&lon=96.0882213&appid=096a89c7ed91f4e847462d9235221369`;
 
-
+        console.log(uri);
         const xmlhttp = new XMLHttpRequest();
         xmlhttp.open("GET", uri, false);
+        xmlhttp.send();
         let result;
+
 
         if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
 
             result = xmlhttp.responseText;
-            // console.log(result);
+            console.log(result);
 
         }
 
-        // console.log(result);
+        console.log(result);
         result = JSON.parse(result);
         console.log(result);
 
@@ -43,7 +46,7 @@
 
         console.log(result.name);
         console.log(result["name"]);
-    </script>
+    // </script>
 
 </body>
 
