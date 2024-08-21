@@ -1,0 +1,30 @@
+=>Name Space
+
+
+=> Exercise ( Before Namespace)
+
+
+<?xml version="1.0"?>
+<Root>
+    <product>
+        <title> Vehicle </title>
+        <type> EV car </type>
+    </product>
+    <product>
+        <title> T-shirt </title>
+        <color> Red </color>
+    </product>
+    <product>
+        <title> Fruit </title>
+        <name> Orange </name>
+    </product>
+</Root>
+
+
+
+
+
+
+
+
+=> Exercise ( After Namespace)
