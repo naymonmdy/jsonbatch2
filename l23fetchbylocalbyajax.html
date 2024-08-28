@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JQury Ajax local</title>
+    <style>
+      
+    </style>
+</head>
+<body>
+    <!-- <script src="https://code.jquery.com/jquery-3.7.1.min.js" type="text/javascript"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+
+        //$j a.jax()
+        // $.ajax(
+        //     {
+        //         method:'',
+        //         url:url,
+        //         dataType:'json'
+        //     }
+        // ).done((data)=>{
+        //     output
+        // }).fail(()=>{
+        //     error
+        // });
+
+
+        const url="./l10sampledata.json";
+//Method 1
+        $.ajax({
+            method:"GET",
+            url:url,
+            dataType:"json"
+
+        }).done((data)=>{
+            // console.log(data);
+
+            // console.log(data);
+            // console.log(typeof data);
+
+            // console.log(data);
+            // console.log(data);
+
+
+            // console.log(data.weather);
+            // console.log(data.weather[0].main);
+            // console.log(data.weather[0]["main"]);
+
+            console.log(data.wind.speed);
+            console.log(data.wind["speed"]);
+            console.log(data["wind"]["speed"]);
+
+        }).fail(()=>{
+            console.log("Error");
+
+        })
+
+
+ //Method 2
+        $.ajax({
+            method:"GET",
+            url:url,
+            dataType:"json",
+            success:(getdata)
+
+        })
+        
+        function getdata(data,status,xhr){
+            console.log(typeof data);
+            console.log(status);
+            console.log(xhr);
+            console.log(xhr.status);
+
+        }
+        
+        
+        
+   
+
+ //Method 3 
+        $.get(url,output);
+
+        function output(data){
+            console.log(data.base);
+        }
+//Method 4
+
+   $.getJSON(url,{
+         format:'json'
+   }).done((data)=>{
+            console.log(data);
+    }).fail(()=>{
+            console.log("error");
+    }).always(function(){
+            console.log("Bye Bye");
+    });
+
+
+      
+    </script>
+</body>
+</html>

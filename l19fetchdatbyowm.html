@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetch - Open Weather Map</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+
+        const key = "096a89c7ed91f4e847462d9235221369";
+        const latitude = "21.9960614";
+        const longitude = "96.0882213";
+
+        let uri = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=096a89c7ed91f4e847462d9235221369`;
+        // let uri = `https://api.openweathermap.org/data/2.5/weather?lat=21.9960614&lon=96.0882213&appid=096a89c7ed91f4e847462d9235221369`;
+
+        console.log(uri);
+
+
+        fetch(uri)
+        .then(response=>response.json())
+        .then(data=>{            
+            console.log(result);
+
+
+        console.log(result.weather);
+        console.log(result.weather[0].main);
+        console.log(result.weather[0]["main"]);
+
+        console.log(result.wind.speed);
+        console.log(result.wind["speed"]);
+        console.log(result["wind"]["speed"]);
+        }).catch(err=>console.log(err));
+
+   
+
+    
+    // </script>
+
+</body>
+
+</html>
