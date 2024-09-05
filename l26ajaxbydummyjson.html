@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IPregistry by AJAX</title>
+    <style>
+        body
+        {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container{
+            background-color: #f4f4f3;
+            padding: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="display"></div>
+        <button type="button" id="btn">Load Data</button>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script type="text/javascript">
+
+
+      const  getdisplay = document.getElementById("display");
+      const  getbutton =document.getElementById("btn");
+
+
+        getbutton.addEventListener("click",function(){
+            loaddata();
+        })
+
+
+        function loaddata(){
+            
+            const uri = 'https://dummyjson.com/products';
+
+
+
+            $.ajax
+            ({
+                Method:"GET",
+                url:uri,
+                dataType:"json"
+            }).done((data)=>{
+                    let html = "<ul>"; // Start building the HTML
+                    data.products.forEach(value => {
+                    console.log(value);
+                 // Append product information to the html string
+                    html += `
+                            <li>
+                                <strong>Title:</strong> ${value.title} <br/>
+                                <strong>Brand:</strong> ${value.brand} <br/>
+                                <strong>Price:</strong> $${value.price} <br/>
+                            </li>
+                        <hr/>
+                    `;
+                });
+
+         
+             
+               getdisplay.innerHTML=html;
+
+            }).fail(()=>{
+                console.log("You have trouble");
+            });
+
+        }
+
+
+
+
+
+
+
+
+      
+    </script>
+</body>
+</html>

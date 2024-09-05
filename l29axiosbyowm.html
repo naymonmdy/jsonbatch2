@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetch by local Axios</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script type="text/javascript">
+
+                const key = "ad8a7ae0055c285d005be3fd8bf870fa";
+                const latitude = "16.3998";
+                const longitude = "96.0809512";
+         let uri = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=096a89c7ed91f4e847462d9235221369`;  
+
+      
+        axios({
+            method:"GET",
+            url:uri
+        })
+            .then((response)=>{
+                console.log(response);
+                console.log(typeof response);
+                console.log(typeof response.data);
+                console.log(typeof response);
+
+
+                console.log(response.weather);
+                console.log(response.weather[0].main);
+                console.log(response.weather[0]["main"]);
+
+                console.log(response.wind.speed);
+                console.log(response.wind["speed"]);
+                console.log(response["wind"]["speed"]);
+
+                console.log(response.name);
+                console.log(response["name"]);
+            })
+            .catch(err=>
+            console.log("err"));
+  
+
+      
+    </script>
+</body>
+</html>

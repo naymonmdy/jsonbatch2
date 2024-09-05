@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IPregistry by AJAX</title>
+    <style>
+        body
+        {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container{
+            background-color: #f4f4f3;
+            padding: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="display"></div>
+        <button type="button" id="btn">Load Data</button>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script type="text/javascript">
+
+
+      const  getdisplay = document.getElementById("display");
+      const  getbutton =document.getElementById("btn");
+
+
+        getbutton.addEventListener("click",function(){
+            loaddata();
+        })
+
+
+        function loaddata(){
+            
+                const key = "ad8a7ae0055c285d005be3fd8bf870fa";
+                const latitude = "16.3998";
+                const longitude = "96.0809512";
+
+        let uri = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=096a89c7ed91f4e847462d9235221369`;
+
+
+            $.ajax
+            ({
+                Method:"GET",
+                url:uri,
+                dataType:"json"
+            }).done((data)=>{ 
+                console.log(data);
+                let html = `<ul>
+                                 <li>Weather :${data.weather[0].main}</li>
+                                 <li>Description :${data.weather[0].description}</li>
+                                 <li>Icon :${data.weather[0].icon}</li>
+                                 <li>wind :${data.wind.speed}</li>
+                            </ul>`;
+
+                getdisplay.innerHTML=html;
+                            
+            }).fail(()=>{
+                console.log("You have trouble");
+            });
+
+        }
+
+
+
+
+
+
+
+
+      
+    </script>
+</body>
+</html>
