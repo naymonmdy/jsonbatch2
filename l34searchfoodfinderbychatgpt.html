@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Food Finder by Fetch</title>
+    <style>
+        body {
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            max-width: 60vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        input, button {
+            font-size: 14px;
+            padding: 8px 10px;
+            margin: 0;
+            cursor: pointer;
+        }
+        input[type="text"] {
+            width: 400px;
+        }
+        .random-btn {
+            cursor: pointer;
+            margin: 10px 0;
+        }
+        .displayone {
+            width: 70%;
+        }
+        .displayone img {
+            width: 200px;
+            border: 5px solid #f4f4f4;
+        }
+        .displayone p {
+            text-align: justify;
+        }
+        .displaytwo {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 20px;
+        }
+        .displaytwo .foodresult {
+            width: 150px;
+            height: 150px;
+            text-align: center;
+            cursor: pointer;
+            position: relative;
+        }
+        .displaytwo .foodresult img {
+            width: 100%;
+            border: 4px solid #fff;
+        }
+        .displaytwo .foodresult .foodinfo {
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            position: absolute;
+            left: 0;
+            top: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.2 ease-in-out;
+        }
+        .displaytwo .foodresult .foodinfo:hover {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Food Finder</h1>
+        <div class="card">
+            <form action="" method="" id="form" class="form">
+                <div class="form-group">
+                    <input type="text" id="search" class="form-control" placeholder="Search...">
+                    <button type="submit" class="search-btn">Search</button>
+                </div>
+            </form>
+        </div>
+        <button type="button" id="random-btn" class="random-btn">Get Random Food</button>
+
+        <div id="displayone" class="displayone"></div>
+        <div id="displaytwo" class="displaytwo"></div>
+    </div>
+   
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <script type="text/javascript">
+        const getrandombtn = document.getElementById("random-btn");
+        const getdisplayone = document.getElementById("displayone");
+        const getsearch = document.getElementById("search");
+        const getform = document.getElementById("form");
+        const getdisplaytwo = document.getElementById("displaytwo");
+
+        getform.addEventListener("submit", searchfoods);
+        getrandombtn.addEventListener("click", getrandomfood);
+
+        function getrandomfood() {
+            getdisplaytwo.innerHTML = "";
+            const url = "https://www.themealdb.com/api/json/v1/1/random.php";
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    const food = data.meals[0];
+                    foodsettertodom(food);
+                })
+                .catch(err => console.log(err));
+        }
+
+        function foodsettertodom(food) {
+            const ingredients = [];
+            for (let i = 1; i <= 20; i++) {
+                if (food[`strIngredient${i}`]) {
+                    ingredients.push(`${food[`strIngredient${i}`]} - ${food[`strMeasure${i}`]}`);
+                }
+            }
+
+            getdisplayone.innerHTML = `
+                <h2>${food.strMeal}<h2/>
+                <img src="${food.strMealThumb}" alt="${food.strMeal}"/>
+                <hr/>
+                <ul class="list-group">
+                    <li>${food.strArea}</li>
+                </ul>
+                <div>
+                    <p>${food.strInstructions}</p>
+                    <h3>Main Ingredients</h3>
+                    <ol>${ingredients.map(ingredient => `<li>${ingredient}</li>`).join("")}</ol>
+                </div>
+            `;
+        }
+
+        function searchfoods(e) {
+            e.preventDefault();
+            getdisplayone.innerHTML = "";
+
+            const getval = getsearch.value;
+            if (getval.trim()) {
+                const url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${getval}`;
+
+                $.ajax({
+                    method: "GET",
+                    url: url,
+                    dataType: 'json'
+                }).done(data => {
+                    if (data.meals === null) {
+                        getdisplayone.innerHTML = `<p>No data found. Please try again.</p>`;
+                    } else {
+                        getdisplaytwo.innerHTML = data.meals.map(food => `
+                            <div class="foodresult">
+                                <img src="${food.strMealThumb}" alt="${food.strMeal}"/>
+                                <div class="foodinfo" data-idmeal="${food.idMeal}">
+                                    <h4>${food.strMeal}</h4>
+                                </div>
+                            </div>
+                        `).join("");
+                    }
+                }).fail(() => console.log("Error"));
+
+                getsearch.value = "";
+            } else {
+                alert("Please enter something");
+            }
+        }
+
+        getdisplaytwo.addEventListener("click", e => {
+            const getfoodinfo = e.composedPath().find(item => {
+                return item.classList && item.classList.contains('foodinfo');
+            });
+
+            if (getfoodinfo) {
+                const getidmeal = getfoodinfo.getAttribute('data-idmeal');
+                getfoodid(getidmeal);
+            }
+        });
+
+        function getfoodid(id) {
+            const url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
+
+            axios({
+                method: "GET",
+                url: url,
+            }).then(response => {
+                const getfood = response.data.meals[0];
+                foodsettertodom(getfood);
+            }).catch(err => console.log(err));
+        }
+    </script>
+</body>
+</html>
