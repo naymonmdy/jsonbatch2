@@ -1,0 +1,21 @@
+https://firebase.google.com
+Get Start
+Create Project => My First Project
+Uncheck =>enable google analytics for this Project
+create project
+https://firebase.google.com/
+go to console
+
+
+Register in Web app
+
+Click </> (web icon)
+Register app = my firt app for web
+also set up hosting = Uncheck
+click Register app
+Containue to console
+
+
+
+=>Get firebase SDK code 
+Click left sidebar > project overview >Project setting
